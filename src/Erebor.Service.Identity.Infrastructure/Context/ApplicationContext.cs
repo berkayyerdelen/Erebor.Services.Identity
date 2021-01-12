@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Infrastructure.Context
 {
-    public class ApplicationContext:IApplicationContext
+    public class ApplicationContext : IApplicationContext
     {
         private readonly IMongoDatabase _database = null;
 
@@ -20,6 +20,14 @@ namespace Erebor.Service.Identity.Infrastructure.Context
             if (client != null)
                 _database = client.GetDatabase(settings.Value.Database);
         }
-        public IMongoCollection<User> Users { get; set; }
+        public IMongoCollection<User> Users
+        {
+            get
+            {
+                return _database.GetCollection<User>("User");
+            }
+            set { }
+        }
+
     }
 }

@@ -1,4 +1,9 @@
+using Erebor.Service.Identity.Core.Domain.UserService.CreateUser;
+using Erebor.Service.Identity.Core.Interfaces;
+using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Infrastructure.Context;
+using Erebor.Service.Identity.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,13 +32,17 @@ namespace Erebor.Service.Identity.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
             services.Configure<DataBaseSettings>(options =>
             {
                 options.ConnectionString = Configuration.GetSection("IdentitystoreDatabase:ConnectionString").Value;
                 options.Database = Configuration.GetSection("IdentitystoreDatabase:Database").Value;
             });
+            services.AddScoped<IApplicationContext, ApplicationContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddMediatR(typeof(CreateUserCommandHandler));
+            services.AddControllers().AddNewtonsoftJson(); 
+         
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Erebor.Service.Identity.Api", Version = "v1" });

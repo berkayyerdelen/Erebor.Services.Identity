@@ -1,6 +1,8 @@
 ﻿using Erebor.Service.Identity.Domain.Entities.Base;
 using Erebor.Service.Identity.Domain.Events;
 using Erebor.Service.Identity.Domain.Exceptions;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,27 @@ using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Domain.Entities
 {
-    public class User : AggregateRoot
+    public class User : Entity, IAggregateRoot
     {
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get; private set; }
         public string Password { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public bool IsActive { get; private set; }
-        protected User(Guid id, List<Email> emails, List<Role> roles, string password, DateTime createdAt)
+       
+        protected User(List<Email> emails, List<Role> roles, string password, DateTime createdAt)
         {
-            Id = id;
+           
             Emails = emails;
             Roles = roles;
             IsActive = true;
             CreatedAt = createdAt;
-            AddEvent(new CreateUserEvent(id, roles, emails, password, createdAt));
+            AddEvent(new CreateUserEvent(roles, emails, password, createdAt));
         }
-        public static User CreateUser(Guid id, List<Email> emails, List<Role> roles, string password, DateTime createdAt)
-            => new User(id, emails, roles, password, createdAt);
+        public static User CreateUser(List<Email> emails, List<Role> roles, string password, DateTime createdAt)
+            => new User(emails, roles, password, createdAt);
         public User RemoveMail(string email)
         {
             var mail = Emails.FirstOrDefault(x => x.Value == email);
