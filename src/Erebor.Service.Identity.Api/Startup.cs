@@ -1,3 +1,4 @@
+using Erebor.Service.Identity.Infrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,11 @@ namespace Erebor.Service.Identity.Api
         {
 
             services.AddControllers();
+            services.Configure<DataBaseSettings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("IdentitystoreDatabase:ConnectionString").Value;
+                options.Database = Configuration.GetSection("IdentitystoreDatabase:Database").Value;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Erebor.Service.Identity.Api", Version = "v1" });

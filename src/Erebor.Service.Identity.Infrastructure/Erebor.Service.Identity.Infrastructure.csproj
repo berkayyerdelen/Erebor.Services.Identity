@@ -4,4 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Erebor.Service.Identity.Core\Erebor.Service.Identity.Core.csproj" />
+    <ProjectReference Include="..\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
