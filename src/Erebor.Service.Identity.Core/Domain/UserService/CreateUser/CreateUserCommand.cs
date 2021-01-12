@@ -15,6 +15,6 @@ namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
         public List<Role> Roles { get;  set; }
         public string Password { get;  set; }
         public DateTime CreatedAt { get;  set; }
-        //public bool IsActive { get;  set; }
+        public bool IsActive { get;  set; }
     }
 }
