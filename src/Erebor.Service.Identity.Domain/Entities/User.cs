@@ -17,21 +17,23 @@ namespace Erebor.Service.Identity.Domain.Entities
         public string Id { get; set; }
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get; private set; }
+        public string UserName { get; set; }
         public string Password { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public bool IsActive { get; private set; }
        
-        protected User(List<Email> emails, List<Role> roles, string password, DateTime createdAt, bool isActive)
+        protected User(List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
         {
            
             Emails = emails;
             Roles = roles;
+            UserName = userName;
             IsActive = true;
             CreatedAt = createdAt;
             IsActive = isActive;
             AddEvent(new CreateUserEvent(roles, emails, password, createdAt));
         }
-        public static User CreateUser(List<Email> emails, List<Role> roles, string password, DateTime createdAt, bool isActive)
+        public static User CreateUser(List<Email> emails, List<Role> roles, string userName string password, DateTime createdAt, bool isActive)
             => new User(emails, roles, password, createdAt,isActive);
         public User RemoveMail(string email)
         {

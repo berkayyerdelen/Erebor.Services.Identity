@@ -9,9 +9,14 @@ namespace Erebor.Service.Identity.Domain.Exceptions
     [Serializable]
     public class BusinessException : Exception
     {
-        public BusinessException(string message) : base(message)
+        public IBusinessRule BrokenRule { get; }
+        public BusinessException(IBusinessRule brokenRule) : base(brokenRule.Message)
         {
 
+        }
+        public override string ToString()
+        {
+            return $"{BrokenRule.GetType().FullName}: {BrokenRule.Message}";
         }
     }
 }
