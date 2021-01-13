@@ -3,6 +3,7 @@ using Erebor.Service.Identity.Core.Interfaces;
 using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Infrastructure.Context;
 using Erebor.Service.Identity.Infrastructure.Repositories;
+using Erebor.Service.Identity.Infrastructure.Repositories.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,11 +33,15 @@ namespace Erebor.Service.Identity.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtTokenConfig = Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
+            services.AddSingleton(jwtTokenConfig);
+            
             services.Configure<DataBaseSettings>(options =>
             {
                 options.ConnectionString = Configuration.GetSection("IdentitystoreDatabase:ConnectionString").Value;
                 options.Database = Configuration.GetSection("IdentitystoreDatabase:Database").Value;
             });
+            services.AddScoped<IJwtAuthManager, JwtAuthManager>();
             services.AddScoped<IApplicationContext, ApplicationContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMediatR(typeof(CreateUserCommandHandler));

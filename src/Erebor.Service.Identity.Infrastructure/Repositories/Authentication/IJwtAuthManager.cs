@@ -17,5 +17,6 @@ namespace Erebor.Service.Identity.Infrastructure.Repositories.Authentication
         Task RemoveExpiredRefreshTokens(DateTime now);
         Task RemoveRefreshTokenByUserName(string userName);
         Task<(ClaimsPrincipal, JwtSecurityToken)> DecodeJwtToken(string token);
+
     }
 }
