@@ -11,8 +11,8 @@ namespace Erebor.Service.Identity.Domain.Repositories
     {
         Task CreateUser(User user);
         Task UpdateUser(User user);
-        Task DeleteUser(string id);
+        Task DeleteUser(Guid id);
         Task<List<User>> GetUsers();
-        Task<User> GetUser(string id);
+        Task<User> GetUser(Guid id);
     }
 }

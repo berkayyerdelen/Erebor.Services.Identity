@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Domain.Entities
 {
-    public class Role
+    public class Role:ValueObject
     {
         private static List<Role> _roles = new List<Role>() { new Role() { Value = "user" }, new Role() { Value = "admin" }, new Role() { Value = "superadmin" } };
 
@@ -20,17 +20,22 @@ namespace Erebor.Service.Identity.Domain.Entities
         {
             foreach (var item in roles)
             {
-                if (!Roles.Any(x => x.Value == item.Value))
+                if (Roles.Any(x => x.Value == item.Value))
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         public static bool IsValid(Role role)
         {
             var result = Roles.Any(x => x.Value == role.Value);
             return result;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }

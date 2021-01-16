@@ -17,8 +17,8 @@ namespace Erebor.Service.Identity.Domain.Test.Entities
             user = User.CreateUser(
                    new List<Email>() { new Email("berkayyerdelen@gmail.com"), new Email("berkayyerdelen1@gmail.com") },
                    new List<Role>() { new Role() { Value = "admin" }, new Role() { Value = "user" } },
-                   "ubersecretpass",
-                   DateTime.UtcNow);
+                   "ubersecretpass","123",
+                   DateTime.UtcNow,true);
         }
         [Fact]
         public void Should_Have_Create_User()
@@ -29,7 +29,7 @@ namespace Erebor.Service.Identity.Domain.Test.Entities
         public void Should_Have_Remove_Mail_From_MailList()
         {
             user.RemoveMail("berkayyerdelen@gmail.com");
-            Assert.Equal("berkayyerdelen1@gmail.com", user.Emails.FirstOrDefault().Value);
+            Assert.Equal("berkayyerdelen1@gmail.com", user.Emails.FirstOrDefault()?.Value);
 
         }
         [Fact]
@@ -63,7 +63,7 @@ namespace Erebor.Service.Identity.Domain.Test.Entities
         public void Should_Have_Update_Mail()
         {
             var entity = user.UpdateMail("berkayyerdelen@gmail.com", "berkay@gmail.com");
-            Assert.Contains("berkay@gmail.com", entity.Emails.FirstOrDefault().Value);
+            Assert.Contains("berkay@gmail.com", entity.Emails.FirstOrDefault()?.Value ?? string.Empty);
         }
         [Fact]
         public void Should_Have_Clear_MailList()
