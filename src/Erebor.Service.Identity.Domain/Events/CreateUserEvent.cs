@@ -13,6 +13,7 @@ namespace Erebor.Service.Identity.Domain.Events
     {
         public CreateUserEvent(List<Role> roles, List<Email> emails,string userName, string password, DateTime createdAt, bool isActive)
         {
+            Roles = roles;
             UserName = userName;
             IsActive = isActive;
             Emails = emails;
@@ -20,11 +21,11 @@ namespace Erebor.Service.Identity.Domain.Events
             CreatedAt = createdAt;
         }
         public bool IsActive { get; set; }
-        public List<Email> Emails { get; private set; }
+        public List<Email> Emails { get;  set; }
         public string UserName { get; set; }
-        public List<Role> Roles { get; private set; }
-        public string Password { get; private set; }
-        public DateTime CreatedAt { get; private set; }
+        public List<Role> Roles { get;  set; }
+        public string Password { get;  set; }
+        public DateTime CreatedAt { get;  set; }
     }
 
 }

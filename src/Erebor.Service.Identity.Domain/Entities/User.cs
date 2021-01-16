@@ -31,10 +31,10 @@ namespace Erebor.Service.Identity.Domain.Entities
             IsActive = true;
             CreatedAt = createdAt;
             IsActive = isActive;
-            AddEvent(new CreateUserEvent(roles, emails, password, createdAt));
+            AddEvent(new CreateUserEvent(roles, emails, userName,password, createdAt,isActive));
         }
-        public static User CreateUser(List<Email> emails, List<Role> roles, string userName string password, DateTime createdAt, bool isActive)
-            => new User(emails, roles, password, createdAt,isActive);
+        public static User CreateUser(List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
+            => new User(emails, roles, userName,password, createdAt,isActive);
         public User RemoveMail(string email)
         {
             var mail = Emails.FirstOrDefault(x => x.Value == email);
@@ -84,12 +84,12 @@ namespace Erebor.Service.Identity.Domain.Entities
         }
         public User RemoveRoles(List<Role> roles)
         {
-            var IsValid = Role.IsValid(roles);
-            if (IsValid)
+            var isValid = Role.IsValid(roles);
+            if (isValid)
             {
                 roles.ForEach(role =>
                 {
-                    var subRole = Roles.FirstOrDefault(role => role.Value == role.Value);
+                    var subRole = Roles.FirstOrDefault(x => x.Value == role.Value);
                     Roles.Remove(subRole);
                 });
             }
@@ -98,10 +98,10 @@ namespace Erebor.Service.Identity.Domain.Entities
         }
         public User UpdateRole(Role role, string value)
         {
-            var IsValid = Role.IsValid(role);
-            if (IsValid)
+            var isValid = Role.IsValid(role);
+            if (isValid)
             {
-                var userRole = Roles.FirstOrDefault(role => role.Value == role.Value);
+                var userRole = Roles.FirstOrDefault(x => x.Value == role.Value);
                 userRole.Value = value;
             }
             AddEvent(new UpdateRoleEvent(value, role));
