@@ -27,9 +27,9 @@ namespace Erebor.Service.Identity.Infrastructure.Repositories
             await _applicationContext.Users.DeleteOneAsync(x => x.Id.Value == id);
         }
 
-        public async Task<User> GetUserAsync(Guid id)
+        public async Task<User> GetUserAsync(string userName)
         {
-            return await _applicationContext.Users.FindSync(x => x.Id.Value == id).FirstAsync();
+            return await _applicationContext.Users.FindSync(x => x.UserName == userName).FirstOrDefaultAsync();
         }
 
         public async Task<List<User>> GetUsersAsync()

@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\AuthService\Login\" />
+  </ItemGroup>
+
 </Project>

@@ -13,6 +13,6 @@ namespace Erebor.Service.Identity.Domain.Repositories
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(Guid id);
         Task<List<User>> GetUsersAsync();
-        Task<User> GetUserAsync(Guid id);
+        Task<User> GetUserAsync(string userName);
     }
 }
