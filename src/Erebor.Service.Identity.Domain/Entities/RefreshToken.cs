@@ -17,7 +17,6 @@ namespace Erebor.Service.Identity.Domain.Entities
             Token = token;
             CreatedAt = createdAt;
             RevokedAt = revokedAt;
-
         }
 
         public RefreshToken Revoke(DateTime revoked)
