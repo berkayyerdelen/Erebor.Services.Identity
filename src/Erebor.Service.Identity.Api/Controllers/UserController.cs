@@ -19,6 +19,7 @@ namespace Erebor.Service.Identity.Api.Controllers
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
+
         }
 
         // POST api/<UserController>
