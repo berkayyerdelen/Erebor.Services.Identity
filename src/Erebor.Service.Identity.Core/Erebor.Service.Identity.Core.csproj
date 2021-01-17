@@ -10,10 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\AuthService\Login\" />
+    <ProjectReference Include="..\Erebor.Service.Identity.Shared\Erebor.Service.Identity.Shared.csproj" />
   </ItemGroup>
 
 </Project>
