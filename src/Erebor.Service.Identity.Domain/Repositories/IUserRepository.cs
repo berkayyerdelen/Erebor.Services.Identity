@@ -9,10 +9,10 @@ namespace Erebor.Service.Identity.Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task CreateUser(User user);
-        Task UpdateUser(User user);
-        Task DeleteUser(Guid id);
-        Task<List<User>> GetUsers();
-        Task<User> GetUser(Guid id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(Guid id);
+        Task<List<User>> GetUsersAsync();
+        Task<User> GetUserAsync(Guid id);
     }
 }
