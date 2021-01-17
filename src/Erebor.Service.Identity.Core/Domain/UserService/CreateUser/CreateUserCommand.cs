@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Entities.Base;
 
 namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
 {

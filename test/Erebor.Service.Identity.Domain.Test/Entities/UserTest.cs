@@ -14,7 +14,7 @@ namespace Erebor.Service.Identity.Domain.Test.Entities
         private User user;
         public UserTest()
         {
-            user = User.CreateUser(
+            user = User.CreateUser(Guid.NewGuid(),
                    new List<Email>() { new Email("berkayyerdelen@gmail.com"), new Email("berkayyerdelen1@gmail.com") },
                    new List<Role>() { new Role() { Value = "admin" }, new Role() { Value = "user" } },
                    "ubersecretpass","123",

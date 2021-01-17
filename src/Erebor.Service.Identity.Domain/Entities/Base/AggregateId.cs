@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Exceptions;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Erebor.Service.Identity.Domain.Entities.Base
 {
     public class AggregateId
     {
+        [BsonId]
         public Guid Value { get; }
 
         public AggregateId()
@@ -20,7 +24,7 @@ namespace Erebor.Service.Identity.Domain.Entities.Base
         {
             if (value == Guid.Empty)
             {
-                throw new InvalidAggregateIdException();
+                throw new InvalidAggregateIdException("Invalid AggregateId Exception");
             }
 
             Value = value;

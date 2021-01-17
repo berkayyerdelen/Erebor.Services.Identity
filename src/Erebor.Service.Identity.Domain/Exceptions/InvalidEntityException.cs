@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Erebor.Service.Identity.Domain.Exceptions
 {
     [Serializable]
-    internal class InvalidEntityException : Exception
+    internal class InvalidEntityException : BusinessException
     {
         
         public InvalidEntityException(string message) : base(message)

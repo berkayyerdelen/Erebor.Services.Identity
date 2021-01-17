@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Erebor.Service.Identity.Domain.Entities.Base
+namespace Erebor.Service.Identity.Domain.Exceptions
 {
     [Serializable]
-    internal class InvalidAggregateIdException : Exception
+    internal class InvalidAggregateIdException : BusinessException
     {
-        public InvalidAggregateIdException()
-        {
-        }
-
+        
         public InvalidAggregateIdException(string message) : base(message)
         {
         }
 
-        public InvalidAggregateIdException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected InvalidAggregateIdException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

@@ -12,6 +12,7 @@ namespace Erebor.Service.Identity.Domain.Entities.Base
 {
     public class AggregateRoot
     {
+        
         public AggregateId Id { get; protected set; }
         private readonly List<INotification> _events = new List<INotification>();
         public IEnumerable<INotification> Events => _events;     

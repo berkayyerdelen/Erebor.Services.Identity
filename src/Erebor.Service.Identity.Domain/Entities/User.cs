@@ -20,9 +20,9 @@ namespace Erebor.Service.Identity.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public bool IsActive { get; private set; }
        
-        protected User(List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
+        protected User(Guid id,List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
         {
-           
+            Id = id;
             Emails = emails;
             Roles = roles;
             UserName = userName;
@@ -31,8 +31,8 @@ namespace Erebor.Service.Identity.Domain.Entities
             IsActive = isActive;
             AddEvent(new CreateUserEvent(roles, emails, userName,password, createdAt,isActive));
         }
-        public static User CreateUser(List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
-            => new User(emails, roles, userName,password, createdAt,isActive);
+        public static User CreateUser(AggregateId id,List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
+            => new User(id,emails, roles, userName,password, createdAt,isActive);
         public User RemoveMail(string email)
         {
             var mail = Emails.FirstOrDefault(x => x.Value == email);
