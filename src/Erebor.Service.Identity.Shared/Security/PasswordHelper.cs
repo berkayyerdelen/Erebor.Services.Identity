@@ -13,7 +13,7 @@ namespace Erebor.Service.Identity.Shared.Security
             using var algorithm = new Rfc2898DeriveBytes(password, SaltSize, 47, HashAlgorithmName.SHA256);
             var key = Convert.ToBase64String(algorithm.GetBytes(KeySize));
             var salt = Convert.ToBase64String(algorithm.Salt);
-            return $"{47}.{salt}.{key}";
+            return $"{0}.{salt}.{key}";
         }
         public static bool Check(string hash, string password)
         {
@@ -25,7 +25,7 @@ namespace Erebor.Service.Identity.Shared.Security
                                           "Should be formatted as `{iterations}.{salt}.{hash}`");
             }
 
-            var iterations = Convert.ToInt32(parts[0]);
+            var iterations = 47;
             var salt = Convert.FromBase64String(parts[1]);
             var key = Convert.FromBase64String(parts[2]);
 

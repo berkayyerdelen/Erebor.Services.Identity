@@ -27,6 +27,7 @@ namespace Erebor.Service.Identity.Domain.Entities
             Roles = roles;
             UserName = userName;
             IsActive = true;
+            Password = password;
             CreatedAt = createdAt;
             IsActive = isActive;
             AddEvent(new CreateUserEvent(roles, emails, userName,password, createdAt,isActive));

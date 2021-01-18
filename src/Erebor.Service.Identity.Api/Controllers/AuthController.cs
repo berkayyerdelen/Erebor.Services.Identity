@@ -24,7 +24,7 @@ namespace Erebor.Service.Identity.Api.Controllers
         public async Task<IActionResult> Login(LoginRequest request)
         {
 
-            return Ok();
+            return  Ok(await _mediator.Send(request));
         }
     }
 }

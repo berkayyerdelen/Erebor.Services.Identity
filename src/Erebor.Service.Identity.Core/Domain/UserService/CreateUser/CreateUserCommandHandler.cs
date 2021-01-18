@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Shared.Security;
 
 namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
 {
@@ -20,8 +21,8 @@ namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
         }
         public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            //Todo: Imp Password Hasher 
-            await _userRepository.CreateUserAsync(User.CreateUser(request.Id,request.Emails,request.Roles,request.UserName,request.Password,request.CreatedAt,request.IsActive));
+            var password = PasswordHelper.Hash(request.Password);
+            await _userRepository.CreateUserAsync(User.CreateUser(request.Id,request.Emails,request.Roles,request.UserName, password, request.CreatedAt,request.IsActive));
             return Unit.Value;
         }
     }
