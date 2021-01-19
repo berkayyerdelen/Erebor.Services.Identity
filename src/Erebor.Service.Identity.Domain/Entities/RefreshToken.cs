@@ -5,10 +5,10 @@ namespace Erebor.Service.Identity.Domain.Entities
 {
     public class RefreshToken : AggregateRoot
     {
-        public AggregateId UserId { get; set; }
-        public string Token { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? RevokedAt { get; set; }
+        public AggregateId UserId { get; private set; }
+        public string Token { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? RevokedAt { get; private set; }
         public bool Revoked => RevokedAt.HasValue;
         protected RefreshToken(AggregateId id, AggregateId userId, string token, DateTime createdAt, DateTime? revokedAt = null)
         {

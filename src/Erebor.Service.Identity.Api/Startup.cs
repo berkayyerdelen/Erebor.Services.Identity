@@ -44,6 +44,7 @@ namespace Erebor.Service.Identity.Api
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
             services.AddScoped<IApplicationContext, ApplicationContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddMediatR(typeof(CreateUserCommandHandler));
             services.AddControllers().AddNewtonsoftJson(); 
          

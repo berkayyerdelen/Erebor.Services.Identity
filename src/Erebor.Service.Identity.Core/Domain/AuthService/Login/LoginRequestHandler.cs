@@ -29,7 +29,7 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
             var roles = user.Roles;
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,user.UserName)
+                new(ClaimTypes.Name,user.UserName)
             };
             roles.ForEach(role => { claims.Add(new Claim(ClaimTypes.Role, role.Value)); });
 
