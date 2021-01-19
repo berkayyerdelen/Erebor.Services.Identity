@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Entities.Base;
 
 namespace Erebor.Service.Identity.Domain.Repositories
 {
@@ -14,5 +15,6 @@ namespace Erebor.Service.Identity.Domain.Repositories
         Task DeleteUserAsync(Guid id);
         Task<List<User>> GetUsersAsync();
         Task<User> GetUserAsync(string userName);
+        Task<User> GetUserAsync(Guid id);
     }
 }

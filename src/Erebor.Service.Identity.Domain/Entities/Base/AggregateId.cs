@@ -17,7 +17,8 @@ namespace Erebor.Service.Identity.Domain.Entities.Base
 
         public AggregateId()
         {
-            Value = Guid.NewGuid();
+            //???
+            //Value = Guid.NewGuid();
         }
 
         public AggregateId(Guid value)

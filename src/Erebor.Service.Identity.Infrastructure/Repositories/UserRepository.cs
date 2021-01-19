@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Entities.Base;
 
 namespace Erebor.Service.Identity.Infrastructure.Repositories
 {
@@ -32,11 +33,17 @@ namespace Erebor.Service.Identity.Infrastructure.Repositories
             return await _applicationContext.Users.FindSync(x => x.UserName == userName).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetUserAsync(Guid id)
+        {
+            var user = await _applicationContext.Users.FindSync(x => x.Id == id).FirstOrDefaultAsync();
+            return user;
+        }
+
         public async Task<List<User>> GetUsersAsync()
         {
            return await _applicationContext.Users.FindSync(x => true).ToListAsync();
         }
-
+      
         public async Task UpdateUserAsync(User user)
         {
             await _applicationContext.Users.ReplaceOneAsync(x => x.Id == user.Id, user);

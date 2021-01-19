@@ -15,13 +15,16 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtAuthManager _jwtTokenManager;
-        public LoginRequestHandler(IUserRepository userRepository, IJwtAuthManager jwtTokenManager)
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
+        public LoginRequestHandler(IUserRepository userRepository, IJwtAuthManager jwtTokenManager, IRefreshTokenRepository refreshTokenRepository)
         {
             _userRepository = userRepository;
             _jwtTokenManager = jwtTokenManager;
+            _refreshTokenRepository = refreshTokenRepository;
         }
         public async Task<LoginResult> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
+            //ToDo:Need to check that refresh token expired or not 
             var user = await _userRepository.GetUserAsync(request.UserName);
             var isValidPassword = PasswordHelper.Check(user.Password, request.Password);
             if (!isValidPassword)
@@ -32,8 +35,6 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
                 new(ClaimTypes.Name,user.UserName)
             };
             roles.ForEach(role => { claims.Add(new Claim(ClaimTypes.Role, role.Value)); });
-
-           
             var token = await _jwtTokenManager.GenerateTokens(user.UserName, claims, DateTime.Now);
             return new LoginResult()
             {
