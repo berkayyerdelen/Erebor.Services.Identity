@@ -22,7 +22,7 @@ namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
         public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var password = PasswordHelper.Hash(request.Password);
-            await _userRepository.CreateUserAsync(User.CreateUser(request.Id,request.Emails,request.Roles,request.UserName, password, request.CreatedAt,request.IsActive));
+            await _userRepository.CreateUserAsync(User.CreateUser(request.Emails,request.Roles,request.UserName, password, request.CreatedAt,request.IsActive));
             return Unit.Value;
         }
     }

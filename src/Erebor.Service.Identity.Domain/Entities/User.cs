@@ -14,6 +14,7 @@ namespace Erebor.Service.Identity.Domain.Entities
     public class User : Entity, IAggregateRoot
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get; private set; }
@@ -22,9 +23,9 @@ namespace Erebor.Service.Identity.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public bool IsActive { get; private set; }
        
-        protected User(string id,List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
+        protected User(/*string id,*/List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
         {
-            Id = id;
+            //Id = id;
             Emails = emails;
             Roles = roles;
             UserName = userName;
@@ -34,8 +35,8 @@ namespace Erebor.Service.Identity.Domain.Entities
             IsActive = isActive;
             AddEvent(new CreateUserEvent(roles, emails, userName,password, createdAt,isActive));
         }
-        public static User CreateUser(string id,List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
-            => new User(id,emails, roles, userName,password, createdAt,isActive);
+        public static User CreateUser(List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
+            => new User(/*id,*/emails, roles, userName,password, createdAt,isActive);
         public User RemoveMail(string email)
         {
             var mail = Emails.FirstOrDefault(x => x.Value == email);

@@ -11,7 +11,7 @@ namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
 {
     public class CreateUserCommand:IRequest
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        //public string Id { get; set; } = Guid.NewGuid().ToString();
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get;  set; }
         public string UserName { get; set; }
