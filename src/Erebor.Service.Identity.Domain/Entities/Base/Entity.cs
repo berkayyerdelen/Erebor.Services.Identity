@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Domain.Entities.Base
 {
-    public class AggregateRoot
+    public class Entity
     {
         
-        public AggregateId Id { get; protected set; }
         private List<INotification> _events;
         public IReadOnlyCollection<INotification> Events => _events?.AsReadOnly();
         protected void AddEvent(INotification @event)

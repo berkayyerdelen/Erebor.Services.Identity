@@ -25,7 +25,7 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
         public async Task<LoginResult> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
             //ToDo:Need to check that refresh token expired or not 
-            var user = await _userRepository.GetUserAsync(request.UserName);
+            var user = await _userRepository.GetUserByNameAsync(request.UserName);
             var isValidPassword = PasswordHelper.Check(user.Password, request.Password);
             if (!isValidPassword)
                 throw new ServiceException("Incorrect Password");

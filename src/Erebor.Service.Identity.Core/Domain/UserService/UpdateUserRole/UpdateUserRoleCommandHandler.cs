@@ -17,9 +17,8 @@ namespace Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole
         }
         public async Task<Unit> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserAsync(new Guid("645fa83f-1757-6245-b3fc-2c963f66afa6"));
+            var user = await _userRepository.GetUserByIdAsync(request.Id);
             user.UpdateRole(request.CurrentRole, request.Role);
-            var t = user;
             await _userRepository.UpdateUserAsync(user);
             return Unit.Value;
 

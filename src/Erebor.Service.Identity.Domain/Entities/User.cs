@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Domain.Entities
 {
-    public class User : AggregateRoot
+    public class User : Entity, IAggregateRoot
     {
+        [BsonId]
+        public string Id { get; set; }
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get; private set; }
         public string UserName { get; set; }
@@ -20,7 +22,7 @@ namespace Erebor.Service.Identity.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public bool IsActive { get; private set; }
        
-        protected User(Guid id,List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
+        protected User(string id,List<Email> emails, List<Role> roles, string userName ,string password, DateTime createdAt, bool isActive)
         {
             Id = id;
             Emails = emails;
@@ -32,7 +34,7 @@ namespace Erebor.Service.Identity.Domain.Entities
             IsActive = isActive;
             AddEvent(new CreateUserEvent(roles, emails, userName,password, createdAt,isActive));
         }
-        public static User CreateUser(AggregateId id,List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
+        public static User CreateUser(string id,List<Email> emails, List<Role> roles, string userName, string password, DateTime createdAt, bool isActive)
             => new User(id,emails, roles, userName,password, createdAt,isActive);
         public User RemoveMail(string email)
         {
@@ -66,8 +68,8 @@ namespace Erebor.Service.Identity.Domain.Entities
         }
         public User AddRole(List<Role> roles)
         {
-            var IsValid = Role.IsValid(roles);
-            if (!IsValid)
+            var isValid = Role.IsValid(roles);
+            if (!isValid)
                 throw new BusinessException("Role is not valid!");
             else
                 roles.ForEach(role =>

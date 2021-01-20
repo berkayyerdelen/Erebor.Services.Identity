@@ -23,17 +23,17 @@ namespace Erebor.Service.Identity.Infrastructure.Repositories
             await _applicationContext.Users.InsertOneAsync(user);
         }
 
-        public async Task DeleteUserAsync(Guid id)
+        public async Task DeleteUserAsync(string id)
         {
-            await _applicationContext.Users.DeleteOneAsync(x => x.Id.Value == id);
+            await _applicationContext.Users.DeleteOneAsync(x => x.Id == id);
         }
 
-        public async Task<User> GetUserAsync(string userName)
+        public async Task<User> GetUserByNameAsync(string userName)
         {
             return await _applicationContext.Users.FindSync(x => x.UserName == userName).FirstOrDefaultAsync();
         }
 
-        public async Task<User> GetUserAsync(Guid id)
+        public async Task<User> GetUserByIdAsync(string id)
         {
             var user = await _applicationContext.Users.FindSync(x => x.Id == id).FirstOrDefaultAsync();
             return user;
