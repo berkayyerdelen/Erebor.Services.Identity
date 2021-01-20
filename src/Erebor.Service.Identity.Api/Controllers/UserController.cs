@@ -22,7 +22,6 @@ namespace Erebor.Service.Identity.Api.Controllers
             _mediator = mediator;
 
         }
-
         // POST api/<UserController>
         [HttpPost("CreateUser")]
         public async Task<IActionResult> CreateUser(CreateUserCommand request)
@@ -35,7 +34,5 @@ namespace Erebor.Service.Identity.Api.Controllers
         {
             return Ok(await _mediator.Send(request));
         }
-
-      
     }
 }
