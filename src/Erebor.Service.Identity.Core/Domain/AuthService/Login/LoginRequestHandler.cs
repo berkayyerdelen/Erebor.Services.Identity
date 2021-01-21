@@ -31,17 +31,9 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
             if (!isValidPassword)
                 throw new ServiceException("Incorrect Password");
 
-            var roles = user.Roles;
-            var claims = new List<Claim>
-            {
-                new(ClaimTypes.Name,user.UserName)
-            };
-
-            roles.ForEach(role => { claims.Add(new Claim(ClaimTypes.Role, role.Value)); });
-
-            var token = await _jwtTokenManager.GenerateTokens(user.UserName, claims, DateTime.Now);
-             await _refreshTokenRepository.AddAsync(Identity.Domain.Entities.RefreshToken.CreateRefreshToken(user.Id, token.Item3, DateTime.Now,
-                DateTime.Now));
+            var token = await _jwtTokenManager.GenerateTokens(user.UserName, user.Roles, DateTime.Now);
+            await _refreshTokenRepository.AddAsync(Identity.Domain.Entities.RefreshToken.CreateRefreshToken(user.Id, token.Item3, DateTime.Now,
+               DateTime.Now));
             return new LoginResult()
             {
                 Token = token.Item1,

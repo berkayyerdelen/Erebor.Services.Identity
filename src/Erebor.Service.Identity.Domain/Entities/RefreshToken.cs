@@ -9,6 +9,7 @@ namespace Erebor.Service.Identity.Domain.Entities
     public class RefreshToken :Entity, IAggregateRoot
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; private set; }
         public string UserId { get; private set; }
         public string Token { get; private set; }
