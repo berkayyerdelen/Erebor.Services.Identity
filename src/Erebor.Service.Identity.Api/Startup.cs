@@ -17,6 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
+using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
+using Erebor.Service.Identity.Infrastructure.Security;
 
 namespace Erebor.Service.Identity.Api
 {
@@ -32,18 +35,22 @@ namespace Erebor.Service.Identity.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var jwtTokenConfig = Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
-            //services.AddSingleton(jwtTokenConfig);
-            
+            var jwtTokenConfig = Configuration.GetSection("jwtAuthConfig").Get<JwtAuthConfig>();
+            services.AddSingleton(jwtTokenConfig);
+
             services.Configure<DataBaseSettings>(options =>
             {
                 options.ConnectionString = Configuration.GetSection("IdentitystoreDatabase:ConnectionString").Value;
                 options.Database = Configuration.GetSection("IdentitystoreDatabase:Database").Value;
             });
-            //services.AddScoped<IJwtAuthManager, JwtAuthManager>();
+            services.AddScoped<IJwtAuthManager, JwtAuthManager>();
             services.AddScoped<IApplicationContext, ApplicationContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+            services.AddMediatR(typeof(UpdateUserRoleCommandHandler));
             services.AddMediatR(typeof(CreateUserCommandHandler));
+            services.AddMediatR(typeof(RefreshTokenCommandHandler));
             services.AddControllers().AddNewtonsoftJson(); 
          
            

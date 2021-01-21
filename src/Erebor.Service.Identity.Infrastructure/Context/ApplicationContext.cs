@@ -22,12 +22,15 @@ namespace Erebor.Service.Identity.Infrastructure.Context
         }
         public IMongoCollection<User> Users
         {
-            get
-            {
-                return _database.GetCollection<User>("User");
-            }
+            get => _database.GetCollection<User>("User");
             set { }
         }
 
+        public IMongoCollection<RefreshToken> RefreshToken
+        {
+            get => _database.GetCollection<RefreshToken>("RefreshToken");
+            set { }
+
+        }
     }
 }

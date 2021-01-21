@@ -7,15 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C894A1F0-6EC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{18E42C87-F570-4153-A768-C1914A38C8C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Api", "src\Erebor.Service.Identity.Api\Erebor.Service.Identity.Api.csproj", "{8471ECE5-1B90-45AA-83F9-6E5B3341C36C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erebor.Service.Identity.Api", "src\Erebor.Service.Identity.Api\Erebor.Service.Identity.Api.csproj", "{8471ECE5-1B90-45AA-83F9-6E5B3341C36C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Core", "src\Erebor.Service.Identity.Core\Erebor.Service.Identity.Core.csproj", "{43D4469E-8089-4718-83E0-21900741907D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erebor.Service.Identity.Core", "src\Erebor.Service.Identity.Core\Erebor.Service.Identity.Core.csproj", "{43D4469E-8089-4718-83E0-21900741907D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Domain", "src\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj", "{EEB12CBF-D9E0-4199-8612-11A785EA7509}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erebor.Service.Identity.Domain", "src\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj", "{EEB12CBF-D9E0-4199-8612-11A785EA7509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Infrastructure", "src\Erebor.Service.Identity.Infrastructure\Erebor.Service.Identity.Infrastructure.csproj", "{73F83C71-E1F4-458B-84B2-8C979967C8B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erebor.Service.Identity.Infrastructure", "src\Erebor.Service.Identity.Infrastructure\Erebor.Service.Identity.Infrastructure.csproj", "{73F83C71-E1F4-458B-84B2-8C979967C8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Domain.Test", "test\Erebor.Service.Identity.Domain.Test\Erebor.Service.Identity.Domain.Test.csproj", "{3BE299E1-D16F-4D3A-98F2-995B64FB6668}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erebor.Service.Identity.Domain.Test", "test\Erebor.Service.Identity.Domain.Test\Erebor.Service.Identity.Domain.Test.csproj", "{3BE299E1-D16F-4D3A-98F2-995B64FB6668}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erebor.Service.Identity.Shared", "src\Erebor.Service.Identity.Shared\Erebor.Service.Identity.Shared.csproj", "{38D42A32-46FB-4760-ABA2-40ABFA94EAEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{3BE299E1-D16F-4D3A-98F2-995B64FB6668}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE299E1-D16F-4D3A-98F2-995B64FB6668}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE299E1-D16F-4D3A-98F2-995B64FB6668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D42A32-46FB-4760-ABA2-40ABFA94EAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D42A32-46FB-4760-ABA2-40ABFA94EAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D42A32-46FB-4760-ABA2-40ABFA94EAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D42A32-46FB-4760-ABA2-40ABFA94EAEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{EEB12CBF-D9E0-4199-8612-11A785EA7509} = {C894A1F0-6ECD-469F-9600-4C8631912842}
 		{73F83C71-E1F4-458B-84B2-8C979967C8B5} = {C894A1F0-6ECD-469F-9600-4C8631912842}
 		{3BE299E1-D16F-4D3A-98F2-995B64FB6668} = {18E42C87-F570-4153-A768-C1914A38C8C8}
+		{38D42A32-46FB-4760-ABA2-40ABFA94EAEC} = {C894A1F0-6ECD-469F-9600-4C8631912842}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FAD7567A-DE9F-41CE-9DF6-B3683D06CF0A}

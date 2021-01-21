@@ -20,7 +20,7 @@ namespace Erebor.Service.Identity.Domain.Entities
         {
             foreach (var item in roles)
             {
-                if (Roles.Any(x => x.Value == item.Value))
+                if (Roles.Any(x => x.Value == item.Value.ToLower()))
                 {
                     return true;
                 }
@@ -29,7 +29,7 @@ namespace Erebor.Service.Identity.Domain.Entities
         }
         public static bool IsValid(Role role)
         {
-            var result = Roles.Any(x => x.Value == role.Value);
+            var result = Roles.Any(x => x.Value == role.Value.ToLower());
             return result;
         }
 

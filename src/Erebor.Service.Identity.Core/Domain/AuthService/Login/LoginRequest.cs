@@ -1,4 +1,5 @@
-﻿using Erebor.Service.Identity.Domain.Entities.Base;
+﻿using System;
+using Erebor.Service.Identity.Domain.Entities.Base;
 using MediatR;
 
 namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
@@ -17,7 +18,8 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
 
     public class LoginResult
     {
-        public AggregateId Id { get; set; }
         public string Token { get; set; }
+        public DateTime TokenExpireDate { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

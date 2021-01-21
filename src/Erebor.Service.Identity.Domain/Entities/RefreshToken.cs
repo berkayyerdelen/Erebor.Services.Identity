@@ -1,18 +1,22 @@
 ﻿using System;
 using Erebor.Service.Identity.Domain.Entities.Base;
+using Erebor.Service.Identity.Shared.Security;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Erebor.Service.Identity.Domain.Entities
 {
-    public class RefreshToken : AggregateRoot
+    public class RefreshToken :Entity, IAggregateRoot
     {
-        public AggregateId UserId { get; set; }
-        public string Token { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? RevokedAt { get; set; }
+        [BsonId]
+        public string Id { get; private set; }
+        public string UserId { get; private set; }
+        public string Token { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? RevokedAt { get; private set; }
         public bool Revoked => RevokedAt.HasValue;
-        protected RefreshToken(AggregateId id, AggregateId userId, string token, DateTime createdAt, DateTime? revokedAt = null)
+        protected RefreshToken( string userId, string token, DateTime createdAt, DateTime? revokedAt = null)
         {
-            Id = id;
             UserId = userId;
             Token = token;
             CreatedAt = createdAt;
@@ -25,8 +29,14 @@ namespace Erebor.Service.Identity.Domain.Entities
             return this;
         }
 
-        public static RefreshToken CreateRefreshToken(AggregateId id, AggregateId userId, string token,
+        public  RefreshToken RevokeRefreshToken()
+        {
+            Token =  TokenGenerator.GenerateRefreshToken();
+            return this;
+        }
+
+        public static RefreshToken CreateRefreshToken(string userId, string token,
             DateTime createdAt, DateTime? revokedAt = null)
-            => new RefreshToken(id, userId, token, createdAt, revokedAt);
+            => new RefreshToken( userId, token, createdAt, revokedAt);
     }
 }
