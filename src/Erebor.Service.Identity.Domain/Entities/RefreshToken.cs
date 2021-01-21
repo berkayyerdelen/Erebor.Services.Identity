@@ -1,5 +1,6 @@
 ﻿using System;
 using Erebor.Service.Identity.Domain.Entities.Base;
+using Erebor.Service.Identity.Shared.Security;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -14,9 +15,8 @@ namespace Erebor.Service.Identity.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime? RevokedAt { get; private set; }
         public bool Revoked => RevokedAt.HasValue;
-        protected RefreshToken(string id, string userId, string token, DateTime createdAt, DateTime? revokedAt = null)
+        protected RefreshToken( string userId, string token, DateTime createdAt, DateTime? revokedAt = null)
         {
-            Id = id;
             UserId = userId;
             Token = token;
             CreatedAt = createdAt;
@@ -29,8 +29,14 @@ namespace Erebor.Service.Identity.Domain.Entities
             return this;
         }
 
-        public static RefreshToken CreateRefreshToken(string id, string userId, string token,
+        public  RefreshToken RevokeRefreshToken()
+        {
+            Token =  TokenGenerator.GenerateRefreshToken();
+            return this;
+        }
+
+        public static RefreshToken CreateRefreshToken(string userId, string token,
             DateTime createdAt, DateTime? revokedAt = null)
-            => new RefreshToken(id, userId, token, createdAt, revokedAt);
+            => new RefreshToken( userId, token, createdAt, revokedAt);
     }
 }

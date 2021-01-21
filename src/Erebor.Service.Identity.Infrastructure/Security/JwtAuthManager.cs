@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Interfaces;
+using Erebor.Service.Identity.Shared.Security;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Erebor.Service.Identity.Infrastructure.Security
@@ -32,7 +33,7 @@ namespace Erebor.Service.Identity.Infrastructure.Security
                 expires: date.AddMinutes(_jwtTokenConfig.AccessTokenExpiration),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature));
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-            var refreshToken = await GenerateRefreshToken();
+            var refreshToken =  TokenGenerator.GenerateRefreshToken();
             var tokenExpiredDate = date.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration);
             return (accessToken, tokenExpiredDate, refreshToken);
         }
@@ -63,13 +64,7 @@ namespace Erebor.Service.Identity.Infrastructure.Security
             return await GenerateTokens(userName, principal?.Claims.ToList(), date);
         }
 
-        private static async Task<string> GenerateRefreshToken()
-        {
-            var randomNumber = new byte[32];
-            using var randomNumberGenerator = RandomNumberGenerator.Create();
-            randomNumberGenerator.GetBytes(randomNumber);
-            return await Task.FromResult(Convert.ToBase64String(randomNumber));
-        }
+       
 
        
     }

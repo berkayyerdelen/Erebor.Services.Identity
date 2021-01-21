@@ -13,4 +13,8 @@
     <Folder Include="Events\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Erebor.Service.Identity.Shared\Erebor.Service.Identity.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

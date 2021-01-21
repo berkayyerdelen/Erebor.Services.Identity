@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
 using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
 using Erebor.Service.Identity.Infrastructure.Security;
 
@@ -49,6 +50,7 @@ namespace Erebor.Service.Identity.Api
 
             services.AddMediatR(typeof(UpdateUserRoleCommandHandler));
             services.AddMediatR(typeof(CreateUserCommandHandler));
+            services.AddMediatR(typeof(RefreshTokenCommandHandler));
             services.AddControllers().AddNewtonsoftJson(); 
          
            
