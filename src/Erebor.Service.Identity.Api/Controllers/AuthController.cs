@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Domain.AuthService.Login;
 using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,12 +23,14 @@ namespace Erebor.Service.Identity.Api.Controllers
             _mediator = mediator;
         }
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(LoginResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             return  Ok(await _mediator.Send(request));
         }
 
         [HttpPost("RefreshToken")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async Task<IActionResult> RefreshToken(RefreshTokenCommand request)
         {
             return Ok(await _mediator.Send(request));

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,15 +25,14 @@ namespace Erebor.Service.Identity.Api.Controllers
         }
         // POST api/<UserController>
         [HttpPost("CreateUser")]
+        [ProducesResponseType(typeof(Unit),(StatusCodes.Status201Created))]
         public async Task<IActionResult> CreateUser(CreateUserCommand request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+            => Ok(await _mediator.Send(request));
 
         [HttpPost("UpdateUserRole")]
+        [ProducesResponseType(typeof(Unit), (StatusCodes.Status200OK))]
         public async Task<IActionResult> UpdateUserRole(UpdateUserRoleCommand request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+            => Ok(await _mediator.Send(request));
+
     }
 }
