@@ -23,8 +23,8 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken
             var entity =await _refreshTokenRepository.GetAsync(request.Token);
             if (entity != null && entity?.RevokedAt < DateTime.Now)
             {
-                entity.RevokeRefreshToken();
-                entity.Revoke(DateTime.Now.AddMinutes(90));
+                entity.RevokeRefreshToken(DateTime.Now);
+                
             }
             await _refreshTokenRepository.UpdateAsync(entity);
             var user =await _userRepository.GetUserByIdAsync(entity?.UserId);

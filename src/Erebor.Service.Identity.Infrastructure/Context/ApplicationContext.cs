@@ -20,17 +20,8 @@ namespace Erebor.Service.Identity.Infrastructure.Context
             if (client != null)
                 _database = client.GetDatabase(settings.Value.Database);
         }
-        public IMongoCollection<User> Users
-        {
-            get => _database.GetCollection<User>("User");
-            set { }
-        }
-
-        public IMongoCollection<RefreshToken> RefreshToken
-        {
-            get => _database.GetCollection<RefreshToken>("RefreshToken");
-            set { }
-
-        }
+        public IMongoCollection<User> Users => _database.GetCollection<User>("User");
+        public IMongoCollection<RefreshToken> RefreshToken => _database.GetCollection<RefreshToken>("RefreshToken");
+        
     }
 }
