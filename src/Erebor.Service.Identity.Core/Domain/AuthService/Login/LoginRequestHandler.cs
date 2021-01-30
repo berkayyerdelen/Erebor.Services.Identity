@@ -27,6 +27,8 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
         {
 
             var user = await _userRepository.GetUserByNameAsync(request.UserName);
+            if (user is null)
+                throw new ServiceException("User not found");
             var isValidPassword = PasswordHelper.Check(user.Password, request.Password);
             if (!isValidPassword)
                 throw new ServiceException("Incorrect Password");
