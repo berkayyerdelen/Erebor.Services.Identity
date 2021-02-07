@@ -18,8 +18,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Api.Middlewares;
+using Erebor.Service.Identity.Core;
+using Erebor.Service.Identity.Core.Domain.AuthService.Login;
 using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
 using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
+using Erebor.Service.Identity.Infrastructure;
 using Erebor.Service.Identity.Infrastructure.Security;
 
 namespace Erebor.Service.Identity.Api
@@ -44,21 +47,18 @@ namespace Erebor.Service.Identity.Api
                 options.ConnectionString = Configuration.GetSection("IdentitystoreDatabase:ConnectionString").Value;
                 options.Database = Configuration.GetSection("IdentitystoreDatabase:Database").Value;
             });
-            services.AddScoped<IJwtAuthManager, JwtAuthManager>();
-            services.AddScoped<IApplicationContext, ApplicationContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-
-            services.AddMediatR(typeof(UpdateUserRoleCommandHandler));
-            services.AddMediatR(typeof(CreateUserCommandHandler));
-            services.AddMediatR(typeof(RefreshTokenCommandHandler));
+            services.AddInfrastructure();
+            services.AddIdentityCommandsCollection();
+            
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddScoped(typeof(ErrorHandlerMiddleware));
            
+           
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Erebor.Service.Identity.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo() { Title = "Identity API", Version = "v1" });
             });
         }
 
@@ -68,8 +68,7 @@ namespace Erebor.Service.Identity.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Erebor.Service.Identity.Api v1"));
+
             }
 
             app.UseHttpsRedirection();
@@ -83,6 +82,11 @@ namespace Erebor.Service.Identity.Api
             {
                 endpoints.MapControllers();
             });
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
         }
     }
 }

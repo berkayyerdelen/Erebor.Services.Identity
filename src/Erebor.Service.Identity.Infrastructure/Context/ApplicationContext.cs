@@ -17,8 +17,8 @@ namespace Erebor.Service.Identity.Infrastructure.Context
         public ApplicationContext(IOptions<DataBaseSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);
-            if (client != null)
-                _database = client.GetDatabase(settings.Value.Database);
+            _database = client.GetDatabase(settings.Value.Database);
+
         }
         public IMongoCollection<User> Users => _database.GetCollection<User>("User");
         public IMongoCollection<RefreshToken> RefreshToken => _database.GetCollection<RefreshToken>("RefreshToken");
