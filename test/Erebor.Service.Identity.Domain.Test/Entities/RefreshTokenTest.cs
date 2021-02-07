@@ -22,8 +22,9 @@ namespace Erebor.Service.Identity.Domain.Test.Entities
         public void Should_Have_Revoke_Token()
         {
             var currentTokenExpireDate = refreshToken.CreatedAt;
-            var revotedTokenDate=refreshToken.RevokeRefreshToken(DateTime.Now).RevokedAt;
-            Assert.True(revotedTokenDate > currentTokenExpireDate);
+            var revokedTokenDate=refreshToken.RevokeRefreshToken(DateTime.Now.AddMinutes(5));
+            Assert.True(revokedTokenDate.Revoked);
+            Assert.True(revokedTokenDate.ExpiredAt > currentTokenExpireDate);
         }
 
     }
