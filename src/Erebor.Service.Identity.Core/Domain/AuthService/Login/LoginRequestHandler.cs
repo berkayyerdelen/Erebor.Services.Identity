@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Exceptions;
 using Erebor.Service.Identity.Core.Interfaces;
-using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Shared.Security;
 using MediatR;

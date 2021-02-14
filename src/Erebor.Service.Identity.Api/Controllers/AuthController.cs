@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Domain.AuthService.Login;
 using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;

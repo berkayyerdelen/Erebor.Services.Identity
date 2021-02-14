@@ -2,8 +2,6 @@
 using Erebor.Service.Identity.Domain.Entities.Base;
 using Erebor.Service.Identity.Domain.Events;
 using Erebor.Service.Identity.Shared.Security;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Erebor.Service.Identity.Domain.Entities
 {

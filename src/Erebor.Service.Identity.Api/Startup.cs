@@ -1,27 +1,13 @@
-using Erebor.Service.Identity.Core.Domain.UserService.CreateUser;
-using Erebor.Service.Identity.Core.Interfaces;
-using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Infrastructure.Context;
-using Erebor.Service.Identity.Infrastructure.Repositories;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Erebor.Service.Identity.Api.Middlewares;
 using Erebor.Service.Identity.Core;
-using Erebor.Service.Identity.Core.Domain.AuthService.Login;
-using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
-using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
 using Erebor.Service.Identity.Infrastructure;
 using Erebor.Service.Identity.Infrastructure.Security;
 
@@ -39,6 +25,8 @@ namespace Erebor.Service.Identity.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var hangfireConnectionString = Configuration["ConnectionStrings:EreborHangfire"];
+            
             var jwtTokenConfig = Configuration.GetSection("jwtAuthConfig").Get<JwtAuthConfig>();
             services.AddSingleton(jwtTokenConfig);
 

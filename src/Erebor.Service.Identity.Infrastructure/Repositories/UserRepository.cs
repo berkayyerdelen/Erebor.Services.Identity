@@ -2,11 +2,8 @@
 using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Domain.Repositories;
 using MongoDB.Driver;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Erebor.Service.Identity.Domain.Entities.Base;
 
 namespace Erebor.Service.Identity.Infrastructure.Repositories
 {

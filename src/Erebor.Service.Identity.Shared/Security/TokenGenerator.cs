@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Shared.Security
 {

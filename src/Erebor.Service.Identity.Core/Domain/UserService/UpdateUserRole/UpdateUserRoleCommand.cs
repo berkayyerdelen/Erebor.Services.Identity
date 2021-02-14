@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Erebor.Service.Identity.Domain.Entities;
-using Erebor.Service.Identity.Domain.Entities.Base;
+﻿using Erebor.Service.Identity.Domain.Entities;
 using MediatR;
 
 namespace Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole

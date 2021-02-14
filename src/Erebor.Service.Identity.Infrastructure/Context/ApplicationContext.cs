@@ -2,11 +2,6 @@
 using Erebor.Service.Identity.Domain.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Infrastructure.Context
 {

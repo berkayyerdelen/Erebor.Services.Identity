@@ -4,12 +4,12 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Logout
 {
     public class LogOutRequest:IRequest
     {
-        public LogOutRequest(string currentUserName)
+        public LogOutRequest(string userId)
         {
-            CurrentUserName = currentUserName;
+            UserId = userId;
         }
 
-        public string CurrentUserName { get; set; }
+        public string UserId { get; set; }
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Erebor.Service.Identity.Domain.Entities.Base;
 using MediatR;
 
 namespace Erebor.Service.Identity.Core.Domain.AuthService.Login

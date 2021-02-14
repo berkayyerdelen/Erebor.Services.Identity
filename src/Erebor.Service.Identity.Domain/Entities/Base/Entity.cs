@@ -1,12 +1,7 @@
-﻿using Erebor.Service.Identity.Domain.Exceptions;
-using MediatR;
-using MongoDB.Bson;
+﻿using MediatR;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Erebor.Service.Identity.Domain.Entities.Base
 {
