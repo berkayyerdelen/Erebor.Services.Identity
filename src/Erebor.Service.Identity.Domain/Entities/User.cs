@@ -13,9 +13,7 @@ namespace Erebor.Service.Identity.Domain.Entities
 {
     public class User : Entity, IAggregateRoot
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+      
         public List<Email> Emails { get; set; }
         public List<Role> Roles { get; private set; }
         public string UserName { get; set; }

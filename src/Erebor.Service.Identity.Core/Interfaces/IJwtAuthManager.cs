@@ -10,6 +10,7 @@ namespace Erebor.Service.Identity.Core.Interfaces
     public interface IJwtAuthManager
     {
         Task<(string,DateTime,string)> GenerateTokens(string username, List<Role> claims, DateTime date);
-
+        Task RemoveExpiredRefreshTokens(DateTime currentDate);
+        Task RemoveRefreshTokenByUserId(string userId);
     }
 }

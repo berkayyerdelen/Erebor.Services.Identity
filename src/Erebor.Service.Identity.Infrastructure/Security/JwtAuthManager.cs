@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Interfaces;
 using Erebor.Service.Identity.Domain.Entities;
+using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Shared.Security;
 using Microsoft.IdentityModel.Tokens;
 
@@ -19,11 +20,13 @@ namespace Erebor.Service.Identity.Infrastructure.Security
     {
         private readonly JwtAuthConfig _jwtTokenConfig;
         private readonly byte[] _secret;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-        public JwtAuthManager(JwtAuthConfig jwtTokenConfig)
+        public JwtAuthManager(JwtAuthConfig jwtTokenConfig, IRefreshTokenRepository refreshTokenRepository)
         {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret);
+            _refreshTokenRepository = refreshTokenRepository;
         }
         public  Task<(string,DateTime,string)> GenerateTokens(string username, List<Role> claims, DateTime date)
         {
@@ -46,5 +49,18 @@ namespace Erebor.Service.Identity.Infrastructure.Security
             return Task.FromResult((accessToken, tokenExpiredDate, refreshToken));
         }
 
+        public async Task RemoveExpiredRefreshTokens(DateTime currentDate)
+        {
+            var expiredTokens =await _refreshTokenRepository.GetExpiredRefreshTokens();
+            expiredTokens.ForEach(id =>
+            {
+               _refreshTokenRepository.DeleteRefreshTokenById(id);
+            });
+        }
+
+        public async Task RemoveRefreshTokenByUserId(string userId)
+        {
+            await _refreshTokenRepository.DeleteRefreshTokenById(userId);
+        }
     }
 }
