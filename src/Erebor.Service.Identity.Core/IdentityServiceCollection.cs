@@ -11,5 +11,6 @@ namespace Erebor.Service.Identity.Core
         {
             services.AddMediatR(typeof(LoginRequestHandler).GetTypeInfo().Assembly);
         }
+
     }
 }

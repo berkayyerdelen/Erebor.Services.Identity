@@ -26,8 +26,8 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.Login
             var user = await _userRepository.GetUserByNameAsync(request.UserName);
             if (user is null)
                 throw new ServiceException("User not found");
-            var isValidPassword = PasswordHelper.Check(user.Password, request.Password);
-            if (!isValidPassword)
+            var userPassword = PasswordHelper.Encrypt(user.Password);
+            if (userPassword != request.Password)
                 throw new ServiceException("Incorrect Password");
 
             var token = await _jwtTokenManager.GenerateTokens(user.UserName, user.Roles, DateTime.Now);

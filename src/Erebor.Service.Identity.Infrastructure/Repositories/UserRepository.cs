@@ -45,5 +45,10 @@ namespace Erebor.Service.Identity.Infrastructure.Repositories
         {
             await _applicationContext.Users.ReplaceOneAsync(x => x.Id == user.Id, user);
         }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _applicationContext.Users.FindSync(x => x.Emails.Contains(new Email(email))).FirstOrDefaultAsync();
+        }
     }
 }

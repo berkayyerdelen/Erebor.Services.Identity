@@ -12,5 +12,6 @@ namespace Erebor.Service.Identity.Domain.Repositories
         Task DeleteUserAsync(string id);
         Task<List<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserByEmailAsync(string email);
     }
 }

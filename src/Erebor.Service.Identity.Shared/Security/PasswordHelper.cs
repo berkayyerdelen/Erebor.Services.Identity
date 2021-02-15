@@ -1,44 +1,55 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Erebor.Service.Identity.Shared.Security
 {
     public static class PasswordHelper
     {
-        private const int SaltSize = 16;
-        private const int KeySize = 32;
-        public static string Hash(string password)
+        public static string Encrypt(string clearText)
         {
-            using var algorithm = new Rfc2898DeriveBytes(password, SaltSize, 47, HashAlgorithmName.SHA256);
-            var key = Convert.ToBase64String(algorithm.GetBytes(KeySize));
-            var salt = Convert.ToBase64String(algorithm.Salt);
-            return $"{0}.{salt}.{key}";
-        }
-        public static bool Check(string hash, string password)
-        {
-            var parts = hash.Split('.', 3);
-
-            if (parts.Length != 3)
+            string EncryptionKey = "abc123";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
+            using (Aes encryptor = Aes.Create())
             {
-                throw new FormatException("Unexpected hash format. " +
-                                          "Should be formatted as `{iterations}.{salt}.{hash}`");
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    clearText = Convert.ToBase64String(ms.ToArray());
+                }
             }
-
-            var iterations = 47;
-            var salt = Convert.FromBase64String(parts[1]);
-            var key = Convert.FromBase64String(parts[2]);
-
-            using var algorithm = new Rfc2898DeriveBytes(
-                password,
-                salt,
-                iterations,
-                HashAlgorithmName.SHA256);
-            var keyToCheck = algorithm.GetBytes(KeySize);
-
-            var verified = keyToCheck.SequenceEqual(key);
-
-            return verified;
+            return clearText;
+        }
+        public static string Decrypt(string cipherText)
+        {
+            string EncryptionKey = "abc123";
+            cipherText = cipherText.Replace(" ", "+");
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return cipherText;
         }
     }
 }

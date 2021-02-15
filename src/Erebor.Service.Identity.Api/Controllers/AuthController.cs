@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Core.Domain.AuthService.ForgetPassword;
 using Erebor.Service.Identity.Core.Domain.AuthService.Login;
 using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
 using MediatR;
@@ -29,6 +30,12 @@ namespace Erebor.Service.Identity.Api.Controllers
         [HttpPost("RefreshToken")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async Task<IActionResult> RefreshToken(RefreshTokenCommand request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPost("ForgetPassword")]
+        public async Task<IActionResult> Forgetpassword([FromBody] ForgetPasswordRequest  request)
         {
             return Ok(await _mediator.Send(request));
         }

@@ -5,16 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hangfire" Version="1.7.19" />
+    <PackageReference Include="Hangfire.Mongo" Version="0.7.19" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Erebor.Service.Identity.Domain\Erebor.Service.Identity.Domain.csproj" />
     <ProjectReference Include="..\Erebor.Service.Identity.Shared\Erebor.Service.Identity.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\AuthService\ForgetPassword\" />
   </ItemGroup>
 
 </Project>
