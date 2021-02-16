@@ -1,9 +1,11 @@
-﻿using Erebor.Service.Identity.Domain.Entities;
+﻿using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Entities;
+using Erebor.Service.Identity.Shared.CommonDTO;
 
 namespace Erebor.Service.Identity.Core.Interfaces
 {
     public interface IForgetPasswordPublisher
     {
-        void ForgetPasswordSender(User user);
+        Task ForgetPasswordSender(UserInfoForgetPasswordDto userinfo);
     }
 }

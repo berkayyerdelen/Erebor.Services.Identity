@@ -1,3 +1,4 @@
+using System;
 using Erebor.Service.Identity.Infrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using LogLevel = Hangfire.Logging.LogLevel;
 using Erebor.Service.Identity.Infrastructure.RabbitMQ.Settings;
+using MassTransit;
 
 namespace Erebor.Service.Identity.Api
 {
@@ -80,6 +82,21 @@ namespace Erebor.Service.Identity.Api
             });
             var serviceClientSettingsConfig = Configuration.GetSection("RabbitMq");
             services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
+
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+                {
+                    config.UseHealthCheck(provider);
+                    config.Host(new Uri("rabbitmq://localhost"), h =>
+                    {
+                        h.Username("admin");
+                        h.Password("admin");
+                    });
+                }));
+            });
+            services.AddMassTransitHostedService();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

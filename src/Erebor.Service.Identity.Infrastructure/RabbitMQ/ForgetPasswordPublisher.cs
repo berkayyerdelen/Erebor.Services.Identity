@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Interfaces;
 using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Infrastructure.RabbitMQ.Settings;
+using Erebor.Service.Identity.Shared.CommonDTO;
+using MassTransit;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -11,50 +14,21 @@ namespace Erebor.Service.Identity.Infrastructure.RabbitMQ
 {
     public class ForgetPasswordPublisher: IForgetPasswordPublisher
     {
-        private readonly string _hostName;
-        private readonly string _password;
-        private readonly string _exchangeName;
-        private readonly string _userName;
-        private IConnection _connection;
-
-        public ForgetPasswordPublisher(IOptions<RabbitMqConfiguration> options)
+        private readonly IBus _bus;
+        public ForgetPasswordPublisher(IBus bus)
         {
-            _hostName = options.Value.Hostname;
-            _password = options.Value.Password;
-            _userName = options.Value.UserName;
-            _exchangeName = options.Value.ExchangeName;
+            _bus = bus;
         }
 
-        public void ForgetPasswordSender(User user)
+        public async Task ForgetPasswordSender(UserInfoForgetPasswordDto userinfo)
         {
-            try
-            {
-                var factory = new ConnectionFactory()
-                {
-                    HostName =  _hostName,
-                    UserName = _userName,
-                    Password = _password,
-                    
-                };
-                using (_connection = factory.CreateConnection())
-                {
-                    using (var channel = _connection.CreateModel())
-                    {
-                        channel.ExchangeDeclare(_exchangeName,ExchangeType.Fanout,true,false);
-
-                        var json = JsonConvert.SerializeObject(user);
-                        var body = Encoding.UTF8.GetBytes(json);
-
-                        channel.BasicPublish(exchange: _exchangeName, "" , basicProperties: null, body: body);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.StackTrace);
-            }
+            Uri uri = new Uri("rabbitmq://localhost/mailQueue");
+            var endPoint = await _bus.GetSendEndpoint(uri);
+            await endPoint.Send(userinfo);
         }
     }
+
+  
 
   
 }
