@@ -20,8 +20,7 @@ using Hangfire.Mongo.Migration.Strategies.Backup;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using LogLevel = Hangfire.Logging.LogLevel;
-using Erebor.Service.Identity.Infrastructure.RabbitMQ.Settings;
-using MassTransit;
+
 
 namespace Erebor.Service.Identity.Api
 {
@@ -60,42 +59,7 @@ namespace Erebor.Service.Identity.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo() { Title = "Identity API", Version = "v1" });
             });
-            services.AddHangfire(config =>
-            {
-
-                // Read DefaultConnection string from appsettings.json
-                var connectionString = Configuration.GetSection("ConnectionStrings:EreborHangfire").Value;
-                var mongoUrlBuilder = new MongoUrlBuilder(connectionString);
-                var mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
-
-                var storageOptions = new MongoStorageOptions
-                {
-                    MigrationOptions = new MongoMigrationOptions
-                    {
-                        MigrationStrategy = new MigrateMongoMigrationStrategy(),
-                        BackupStrategy = new CollectionMongoBackupStrategy()
-                    }
-                };
-                //config.UseLogProvider(new FileLogProvider());
-                config.UseColouredConsoleLogProvider(LogLevel.Info);
-                config.UseMongoStorage(mongoClient, mongoUrlBuilder.DatabaseName, storageOptions);
-            });
-            var serviceClientSettingsConfig = Configuration.GetSection("RabbitMq");
-            services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
-
-            services.AddMassTransit(x =>
-            {
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
-                {
-                    config.UseHealthCheck(provider);
-                    config.Host(new Uri("rabbitmq://localhost"), h =>
-                    {
-                        h.Username("admin");
-                        h.Password("admin");
-                    });
-                }));
-            });
-            services.AddMassTransitHostedService();
+      
             services.AddControllers();
         }
 
@@ -125,13 +89,6 @@ namespace Erebor.Service.Identity.Api
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
             var options = new BackgroundJobServerOptions { Queues = new[] { "default", "notDefault" } };
-
-            app.UseHangfireServer(options);
-
-            app.UseHangfireDashboard();
-            RecurringJob.AddOrUpdate<RemoveExpiredTokenManager>
-            (nameof(RemoveExpiredTokenManager.RemoveExpiredTokens),
-                x => x.RemoveExpiredTokens(), Cron.Hourly);
-        }
+  }
     }
 }

@@ -17,19 +17,18 @@ namespace Erebor.Service.Identity.Core.Domain.AuthService.ForgetPassword
     public sealed class ForgetPasswordRequestHandler : IRequestHandler<ForgetPasswordRequest>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IForgetPasswordPublisher _forgetPasswordPublisher;
+ 
 
-        public ForgetPasswordRequestHandler(IUserRepository userRepository, IForgetPasswordPublisher forgetPasswordPublisher)
+        public ForgetPasswordRequestHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _forgetPasswordPublisher = forgetPasswordPublisher;
+            
         }
 
         public async Task<Unit> Handle(ForgetPasswordRequest request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetUserByEmailAsync(request.Email);
             user.UpdatePassword(PasswordHelper.Decrypt(user.Password));
-            await _forgetPasswordPublisher.ForgetPasswordSender(new UserInfoForgetPasswordDto{Password = user.Password,UserName = user.UserName});
             return Unit.Value;
 
         }

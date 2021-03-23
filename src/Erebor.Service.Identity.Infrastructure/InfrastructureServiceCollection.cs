@@ -2,7 +2,6 @@
 using Erebor.Service.Identity.Domain.Repositories;
 using Erebor.Service.Identity.Infrastructure.Context;
 using Erebor.Service.Identity.Infrastructure.Hangfire;
-using Erebor.Service.Identity.Infrastructure.RabbitMQ;
 using Erebor.Service.Identity.Infrastructure.Repositories;
 using Erebor.Service.Identity.Infrastructure.Security;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +17,7 @@ namespace Erebor.Service.Identity.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<RemoveExpiredTokenManager>();
-            services.AddSingleton<IForgetPasswordPublisher, ForgetPasswordPublisher>();
+         
         }  
     }
 }
