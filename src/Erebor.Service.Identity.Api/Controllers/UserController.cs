@@ -1,8 +1,8 @@
-﻿using Erebor.Service.Identity.Core.Domain.UserService.CreateUser;
+﻿
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole;
+using Erebor.Service.Identity.Core.Domain.UserService;
 using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,19 +16,15 @@ namespace Erebor.Service.Identity.Api.Controllers
         private readonly IMediator _mediator;
 
         public UserController(IMediator mediator)
-        {
-            _mediator = mediator;
-
-        }
-        // POST api/<UserController>
+            => _mediator = mediator;
         [HttpPost("CreateUser")]
         [ProducesResponseType(typeof(Unit),(StatusCodes.Status201Created))]
-        public async Task<IActionResult> CreateUser(CreateUserCommand request)
+        public async Task<IActionResult> CreateUserAsync(CreateUserCommand request)
             => Ok(await _mediator.Send(request));
 
-        [HttpPost("UpdateUserRole")]
+        [HttpPut("UpdateUserRole")]
         [ProducesResponseType(typeof(Unit), (StatusCodes.Status200OK))]
-        public async Task<IActionResult> UpdateUserRole(UpdateUserRoleCommand request)
+        public async Task<IActionResult> UpdateUserRoleAsync(UpdateUserRoleCommand request)
             => Ok(await _mediator.Send(request));
 
     }

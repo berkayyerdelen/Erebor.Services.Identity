@@ -5,8 +5,12 @@ using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Domain.Repositories;
 using MediatR;
 
-namespace Erebor.Service.Identity.Core.Domain.UserService.GetUsers
+namespace Erebor.Service.Identity.Core.Domain.UserService
 {
+    public class GetUsersRequest:IRequest<List<User>>
+    {
+        
+    }
     public sealed class GetUsersRequestHandler : IRequestHandler<GetUsersRequest,List<User>>
     {
         private readonly IUserRepository _userRepository;

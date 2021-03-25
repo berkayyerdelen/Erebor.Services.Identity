@@ -3,8 +3,12 @@ using System.Threading.Tasks;
 using Erebor.Service.Identity.Domain.Repositories;
 using MediatR;
 
-namespace Erebor.Service.Identity.Core.Domain.UserService.DeleteUser
+namespace Erebor.Service.Identity.Core.Domain.UserService
 {
+     public class DeleteUserCommand: IRequest
+    {
+        public string UserId { get; set; }
+    }
     public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     {
         public readonly IUserRepository _userRepository;
