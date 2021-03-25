@@ -4,7 +4,7 @@ using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Domain.Repositories;
 using MediatR;
 
-namespace Erebor.Service.Identity.Core.Domain.UserService.GetUserByName
+namespace Erebor.Service.Identity.Core.Domain.UserService
 {
     public class GetUserByNameRequest:IRequest<User>
     {

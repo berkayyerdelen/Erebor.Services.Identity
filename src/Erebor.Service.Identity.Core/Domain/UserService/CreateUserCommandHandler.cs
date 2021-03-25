@@ -4,9 +4,20 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Shared.Security;
+using System.Collections.Generic;
+using System;
 
-namespace Erebor.Service.Identity.Core.Domain.UserService.CreateUser
+namespace Erebor.Service.Identity.Core.Domain.UserService
 {
+      public class CreateUserCommand:IRequest
+    {
+        public List<Email> Emails { get; set; }
+        public List<Role> Roles { get;  set; }
+        public string UserName { get; set; }
+        public string Password { get;  set; }
+        public DateTime CreatedAt { get;  set; }
+        public bool IsActive { get;  set; }
+    }
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     {
         private readonly IUserRepository _userRepository;

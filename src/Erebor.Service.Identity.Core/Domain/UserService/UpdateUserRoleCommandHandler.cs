@@ -1,11 +1,18 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Erebor.Service.Identity.Domain.Entities;
 using Erebor.Service.Identity.Domain.Repositories;
 using MediatR;
 
-namespace Erebor.Service.Identity.Core.Domain.UserService.UpdateUserRole
+namespace Erebor.Service.Identity.Core.Domain.UserService
 {
-    public class UpdateUserRoleCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>
+    public class UpdateUserRoleCommand : IRequest<Unit>
+    {
+        public string Id { get; set; }
+        public Role CurrentRole { get; set; }
+        public string Role { get; set; }
+    }
+    public sealed class UpdateUserRoleCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 

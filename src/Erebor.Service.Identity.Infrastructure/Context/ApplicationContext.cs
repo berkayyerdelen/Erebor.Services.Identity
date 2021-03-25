@@ -16,7 +16,6 @@ namespace Erebor.Service.Identity.Infrastructure.Context
 
         }
         public IMongoCollection<User> Users => _database.GetCollection<User>("User");
-        public IMongoCollection<RefreshToken> RefreshToken => _database.GetCollection<RefreshToken>("RefreshToken");
         
     }
 }

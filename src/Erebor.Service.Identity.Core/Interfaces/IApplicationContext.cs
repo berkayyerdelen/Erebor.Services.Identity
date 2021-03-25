@@ -6,6 +6,5 @@ namespace Erebor.Service.Identity.Core.Interfaces
     public interface IApplicationContext
     {
         public IMongoCollection<User> Users { get; }
-        public IMongoCollection<RefreshToken> RefreshToken { get;}
     }
 }

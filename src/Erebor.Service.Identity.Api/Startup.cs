@@ -9,9 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Erebor.Service.Identity.Api.Middlewares;
 using Erebor.Service.Identity.Core;
-using Erebor.Service.Identity.Core.SelfHosted;
 using Erebor.Service.Identity.Infrastructure;
-using Erebor.Service.Identity.Infrastructure.Hangfire;
 using Erebor.Service.Identity.Infrastructure.Security;
 using Hangfire;
 using Hangfire.Mongo;
@@ -47,19 +45,16 @@ namespace Erebor.Service.Identity.Api
             });
             services.AddInfrastructure();
             services.AddIdentityCommandsCollection();
-            
-            
+
+
             services.AddControllers().AddNewtonsoftJson();
 
-            services.AddScoped(typeof(ErrorHandlerMiddleware));
-           
-           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo() { Title = "Identity API", Version = "v1" });
             });
-      
+
             services.AddControllers();
         }
 
@@ -71,24 +66,24 @@ namespace Erebor.Service.Identity.Api
                 app.UseDeveloperExceptionPage();
 
             }
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                })
+                .UseAuthorization()
+                .UseRouting()
+                .UseAuthentication()
+                .UseMiddleware<ExceptionMiddleware>();
 
-            app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            app.UseSwagger()
-                .UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                });
-            var options = new BackgroundJobServerOptions { Queues = new[] { "default", "notDefault" } };
-  }
+
+
+        }
     }
 }

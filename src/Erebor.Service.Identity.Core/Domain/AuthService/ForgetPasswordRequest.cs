@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using Erebor.Service.Identity.Core.Interfaces;
 using Erebor.Service.Identity.Domain.Repositories;
-using Erebor.Service.Identity.Shared.CommonDTO;
 using Erebor.Service.Identity.Shared.Security;
 using MediatR;
 
-namespace Erebor.Service.Identity.Core.Domain.AuthService.ForgetPassword
+namespace Erebor.Service.Identity.Core.Domain.AuthService
 {
     public class ForgetPasswordRequest : IRequest
     {

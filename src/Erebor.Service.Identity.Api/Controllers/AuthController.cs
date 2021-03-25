@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Erebor.Service.Identity.Core.Domain.AuthService.ForgetPassword;
-using Erebor.Service.Identity.Core.Domain.AuthService.Login;
-using Erebor.Service.Identity.Core.Domain.AuthService.RefreshToken;
+using Erebor.Service.Identity.Core.Domain.AuthService;
+using Erebor.Service.Identity.Core.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -16,28 +15,15 @@ namespace Erebor.Service.Identity.Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public AuthController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public AuthController(IMediator mediator) => _mediator = mediator;
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(LoginResult), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Login(LoginRequest request)
-        {
-            return  Ok(await _mediator.Send(request));
-        }
-
-        [HttpPost("RefreshToken")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        public async Task<IActionResult> RefreshToken(RefreshTokenCommand request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
+        [ProducesResponseType(typeof(LoginResultDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Login(LoginRequest request) 
+            => Ok(await _mediator.Send(request));
+        
         [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> Forgetpassword([FromBody] ForgetPasswordRequest  request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+        [ProducesResponseType(typeof(Unit), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Forgetpassword([FromBody] ForgetPasswordRequest request) 
+            => Ok(await _mediator.Send(request));
     }
 }
